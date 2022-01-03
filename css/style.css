@@ -1,0 +1,259 @@
+html {
+  width: 100vw;
+  height: 100vh;
+  
+}
+body {
+  background: rgb(44, 44, 61)
+}
+html .Application {
+  padding: 20px;
+  display: flex;
+  flex-direction: row;
+}
+html .Application .UserMenu {
+  position: absolute;
+  /* padding: 10px; */
+  padding-top: 20px;
+  padding-bottom: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+
+  background-color: rgba(231, 220, 67, 0.2);
+  /* width: 30%; */
+  width: 320px;
+  border-radius: 3px;
+  z-index: 3;
+}
+html .Application .UserMenu #Toggleable .Legend {
+  height: auto;
+  border: none;
+  background-color: white;
+  border-radius: 3px;
+  box-shadow: 0 0 10px 3px rgba(99, 99, 99, 0.3);
+  display: flex;
+  flex-direction: row;
+}
+html .Application .UserMenu #Toggleable .Legend .keyGroup {
+  /* flex: 0 0 33%; */
+  padding: 5px ;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+html .Application .UserMenu #Toggleable .Legend .keyGroup p {
+  margin: 2px;
+  font-size: 12px;
+}
+html .Application .UserMenu #Toggleable .Legend .keyGroup .key {
+  width: 15px;
+  height: 15px;
+  margin-right: 5px;
+  border-radius: 3px;
+}
+html .Application .UserMenu #Toggleable .Legend .keyGroup #familyKey {
+  background-color: #ff9bb2;
+}
+html .Application .UserMenu #Toggleable .Legend .keyGroup #friendKey {
+  background-color: #93c6b1;
+}
+html .Application .UserMenu #Toggleable .Legend .keyGroup #businessKey {
+  background-color: #fff09b;
+}
+html .Application .UserMenu #Toggleable .Legend .keyGroup #geKey {
+  background-color: #636363;
+}
+html .Application .UserMenu #Toggleable .Search {
+  margin: 20px 0px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+html .Application .UserMenu #Toggleable .Search input {
+  border: 0;
+  border-radius: 3px;
+  width: 70%;
+  height: 20px;
+}
+html .Application .UserMenu #Toggleable .Search input:focus {
+  outline: none;
+}
+html .Application .UserMenu #Toggleable .Search button {
+  border: 0;
+  cursor: pointer;
+  border-radius: 2px;
+  background-color: white;
+  transition: 0.3s;
+}
+html .Application .UserMenu #Toggleable .Search button:focus {
+  outline: none;
+}
+html .Application .UserMenu #Toggleable .Search button:hover {
+  background-color: #ff5f49;
+  transition: 0.3s;
+}
+html .Application .UserMenu #Toggleable .BiographyFamily {
+  background-color: rgba(255, 155, 178, 0.5);
+}
+html .Application .UserMenu #Toggleable .BiographyFamily #BiographySummary {
+  background-color: rgba(255, 79, 119, 0.2);
+}
+html .Application .UserMenu #Toggleable .BiographyFriend {
+  background-color: rgba(147, 198, 177, 0.5);
+}
+html .Application .UserMenu #Toggleable .BiographyFriend #BiographySummary {
+  background-color: rgba(97, 172, 141, 0.4);
+}
+html .Application .UserMenu #Toggleable .BiographyBA {
+  background-color: rgba(255, 240, 155, 0.5);
+}
+html .Application .UserMenu #Toggleable .BiographyBA #BiographySummary {
+  background-color: rgba(255, 229, 79, 0.5);
+}
+html .Application .UserMenu #Toggleable #Biography {
+  width: 98%;
+  border-radius: 3px;
+  margin-bottom: 20px;
+  /* margin-left: 50px; */
+  /* margin-top: 100px; */
+  max-height: 50vh;
+  overflow: auto;
+  display: none;
+}
+html .Application .UserMenu #Toggleable #Biography .Info {
+  padding: 1%;
+}
+html .Application .UserMenu #Toggleable #Biography .Info .NameAndClose {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+html .Application .UserMenu #Toggleable #Biography .Info .NameAndClose #CloseButton {
+  display: none;
+}
+html .Application .UserMenu #Toggleable #Biography .Info .NameAndClose #CloseButton svg {
+  width: 10px;
+  height: 10px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+html .Application .UserMenu #Toggleable #Biography .Info .NameAndClose #CloseButton svg:hover {
+  width: 13px;
+  height: 13px;
+  transition: 0.3s;
+}
+html .Application .UserMenu #Toggleable #Biography .Photo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 5px 0;
+}
+html .Application .UserMenu #Toggleable #Biography .Photo #BiographyPhoto {
+  margin: 0 auto;
+  width: 50%;
+}
+html .Application .UserMenu #Toggleable #Biography #BiographySummary {
+  padding: 1%;
+}
+html .Application .UserMenu #Toggleable #Biography #BiographyLetters {
+  margin-top: 10px;
+  padding: 1%;
+}
+html .Application .UserMenu .ToggleMenu {
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+}
+html .Application .UserMenu .ToggleMenu .Button {
+  display: flex;
+  flex-direction: row;
+  background-color: rgba(26, 26, 26, 0.1);
+  border-radius: 3px;
+  padding: 3px;
+  transition: 0.2s;
+}
+html .Application .UserMenu .ToggleMenu .Button:hover {
+  background-color: white;
+  transition: 0.2s;
+}
+html .Application .UserMenu .ToggleMenu .Button svg {
+  width: 15px;
+  height: 15px;
+  transform: rotate(180deg);
+  margin-left: 20px;
+}
+html .Application #relationshipWeb {
+  margin: 0 auto;
+  width: 100%;
+  height: 90vh;
+}
+
+.RelationshipNode {
+  cursor: pointer;
+}
+
+.fullNameBorderFriend {
+  padding: 1px;
+  border-radius: 3px;
+  border: 1px solid #93c6b1;
+  background-color: #c9e3d8;
+  text-align: center;
+}
+
+.fullNameBorderFamily {
+  padding: 1px;
+  border-radius: 3px;
+  border: 1px solid #ff9bb2;
+  background-color: #ffcdd9;
+}
+
+.fullNameBorderBA {
+  padding: 1px;
+  border-radius: 3px;
+  border: 1px solid #fff09b;
+  background-color: #fff8cd;
+}
+
+iframe {
+  border: none;
+}
+
+
+html .Application .UserMenu #Toggleable .Search #people option{
+  margin: 1px;
+  
+  background-color: rgba(37, 138, 233, 0.1);
+  /* Whatever color  you want */
+  background-color: #82caff;
+  background: transparent;
+  
+  color: burlywood;
+  
+  text-shadow: 0 1px 0 rgba(123, 233, 160, 0.4);
+  font-weight: normal;
+    /* display: inline-block; */
+    /* white-space: wrap; */
+    min-height: 1.2em;
+    padding: 0px 2px 1px;
+}
+
+datalist{
+  margin: 1px;
+  
+  background-color: rgba(37, 138, 233, 0.1) !important;
+  /* Whatever color  you want */
+  background: #82caff;
+  background: transparent !important;
+  
+  color: burlywood;
+  
+  text-shadow: 0 1px 0 rgba(123, 233, 160, 0.4);
+  font-weight: normal;
+    /* display: inline-block; */
+    /* white-space: wrap; */
+    min-height: 1.2em;
+    padding: 0px 2px 1px;
+}
+
+
+/*# sourceMappingURL=style.css.map */

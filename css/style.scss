@@ -1,0 +1,228 @@
+@import "./variables.scss";
+
+html {
+    width: 100vw;
+    height: 100vh;
+    .Application {
+        padding: 20px;
+        display: flex;
+        flex-direction: row;
+        .UserMenu {
+            position: absolute;
+            padding: 20px;
+            background-color: rgba(lighten(black, 10%), 0.2);
+            width: 30%;
+            border-radius: 3px;
+            z-index: 3;
+
+            #Toggleable{
+                .Legend {
+                    height: auto;
+                    border: none;
+                    background-color: white;
+                    border-radius: 3px;
+                    box-shadow: 0 0 10px 3px rgba($relationship-ge, 0.3);
+                    display: flex;
+                    flex-direction: row;
+                    .keyGroup {
+                        flex: 0 0 50%;
+                        display: flex;
+                        flex-direction: row;
+                        align-items: center;
+                        p {
+                            margin: 2px;
+                            font-size: 12px;
+                        }
+                        .key {
+                            width: 15px;
+                            height: 15px;
+                            margin-right: 5px;
+                            border-radius: 3px;
+                        }
+                        #familyKey {
+                            background-color: $relationship-family;
+                        }
+                        #friendKey {
+                            background-color: $relationship-friend;
+                        }
+                        #businessKey {
+                            background-color: $relationship-business-associate;
+                        }
+                        #geKey {
+                            background-color: $relationship-ge;
+                        }
+                    }
+                }
+                .Search {
+                    margin: 20px 0px;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+                    input {
+                        border: 0;
+                        border-radius: 3px;
+                        width: 70%;
+                        height: 20px;
+        
+                        &:focus {
+                            // border: 1px solid $accent-color;
+                            outline: none;
+                        }
+                    }
+        
+                    button {
+                        border: 0;
+                        cursor: pointer;
+                        border-radius: 2px;
+                        background-color: white;
+                        transition: 0.3s;
+        
+                        &:focus {
+                            outline: none;
+                        }
+        
+                        &:hover {
+                            background-color: $accent-color;
+                            transition: 0.3s;
+                        }
+                    }
+                }
+
+                .BiographyFamily {
+                    background-color: rgba($relationship-family, 0.5);
+                    #BiographySummary {
+                        background-color: rgba(darken($relationship-family, 15%), 0.2);
+                    }
+                }
+
+                .BiographyFriend {
+                    background-color: rgba($relationship-friend, 0.5);
+                    #BiographySummary {
+                        background-color: rgba(darken($relationship-friend, 15%), 0.4);
+                    }
+                }
+
+                .BiographyBA {
+                    background-color: rgba($relationship-business-associate, 0.5);
+                    #BiographySummary {
+                        background-color: rgba(darken($relationship-business-associate, 15%), 0.5);
+                    }
+                }
+
+                #Biography {
+                    width: 98%;
+                    border-radius: 3px;
+                    margin-bottom: 20px;
+                    max-height: 50vh;
+                    overflow: auto;
+                    display: none;
+                    .Info {
+                        padding: 1%;
+                        .NameAndClose {
+                            display: flex;
+                            flex-direction: row;
+                            justify-content: space-between;
+                            
+                            #CloseButton {
+                                display: none;
+                                svg {
+                                    width: 10px;
+                                    height: 10px;
+                                    cursor: pointer;
+                                    transition: 0.3s;
+                                    &:hover {
+                                        width: 13px;
+                                        height: 13px;
+                                        transition: 0.3s;
+                                    }
+                                }
+                            }
+                            
+                        }
+                    }
+                    .Photo {
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: center;
+                        margin: 5px 0;
+                        #BiographyPhoto {
+                            margin: 0 auto;
+                            width: 50%;
+                        }
+                    }
+                    
+                    #BiographySummary {
+                        padding: 1%;
+                    }
+                    #BiographyLetters {
+                        margin-top: 10px;
+                        padding: 1%;
+                    }
+                }
+            }
+            
+            .ToggleMenu {
+                display: flex;
+                justify-content: center;
+                cursor: pointer;
+                .Button {
+                    display: flex;
+                    flex-direction: row;
+                    background-color: rgba(lighten(black, 10%), 0.3);
+                    border-radius: 3px;
+                    padding: 3px;
+                    transition: 0.2s;
+                    &:hover {
+                        background-color: white;
+                        transition: 0.2s;
+                    }
+                    svg {
+                        width: 15px;
+                        height: 15px;
+                        transform: rotate(180deg);
+                        margin-left: 20px;
+                    }
+                }
+                
+            }
+
+            
+        }
+        #relationshipWeb {
+            margin: 0 auto;
+            width: 100%;
+            height: 90vh;
+        }
+    }
+    
+}
+
+.RelationshipNode {
+    cursor: pointer;
+}
+
+.fullNameBorderFriend {
+    padding: 1px;
+    border-radius: 3px;
+    border: 1px solid $relationship-friend;
+    background-color: mix($relationship-friend, white);
+    text-align:center;
+}
+
+.fullNameBorderFamily {
+    padding: 1px;
+    border-radius: 3px;
+    border: 1px solid $relationship-family;
+    background-color: mix($relationship-family, white);
+}
+
+.fullNameBorderBA {
+    padding: 1px;
+    border-radius: 3px;
+    border: 1px solid $relationship-business-associate;
+    background-color: mix($relationship-business-associate, white);
+}
+
+iframe {
+    border: none;
+}
