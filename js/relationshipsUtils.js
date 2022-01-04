@@ -27,7 +27,7 @@ var GE_COLOR = '#DAA520';
 var WIDTH = 1000;
 var HEIGHT = 900;
 var USER_MENU_WIDTH_SHOW = '320px';
-var USER_MENU_WIDTH_HIDE = '160px'
+var USER_MENU_WIDTH_HIDE = '160px';
  
  var  IMAGE_R = 80; //radius for biography container
 

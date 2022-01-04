@@ -34,7 +34,7 @@ setImage('images/png/nopicture_family.png', 'family');
 var maxRadius = 20;
 const scaleLegendGroup = svg.append('g')
                             .attr('class', 'scale-legend')
-.attr('transform', `translate(${WIDTH *2 /5}, 25)`)
+                            .attr('transform', `translate(${WIDTH *2 /5}, 25)`)
                             .attr('opacity', 0.7);
 const scaleLegend = d3.scaleLinear();
 
@@ -116,10 +116,14 @@ var parseData = d3.csv('data/ge_people.csv', function(node) {
                     node.ImagePath = 'image_acquaintance';
                     break;
             }
-        }
+        }        
         nodes.push(node);
         links.push({source: node.index, target: 0});
+        // console.log(links)
+        
     }
+    // console.log(nodes)
+    // console.log(links)
 });
 
 /**
@@ -142,6 +146,7 @@ parseData.then(function() {
         var htmlOption = document.createElement('option');
         htmlOption.value = person.name;
         peopleList.appendChild(htmlOption);
+        
     })
     
     
@@ -187,10 +192,11 @@ parseData.then(function() {
             deselectNode(d3.select(this));
         })
         .on('click', function() {
+            // console.log(this)
             showSummary(d3.select(this));
         });
         node.transition()
-        .duration(3000)
+        .duration(1000)
         .attr('opacity', 1);
         // .attr('fill', function(d) { return 'url(#' + d.ImagePath + ')'; })
 
@@ -216,7 +222,7 @@ parseData.then(function() {
                     .attr('stroke-width', 2)
     
      
-
+    // console.log(links)
     //set distance between nodes
     var NODE_DISTANCE = 30;
     var linkForce = d3.forceLink(links)
@@ -243,13 +249,14 @@ parseData.then(function() {
     //           })
     //  });
     d3.forceSimulation(nodes)
-        .force('charge', d3.forceManyBody().strength(5))
+        .force('charge', d3.forceManyBody().strength(Math.random() * 10))
         .force('center', d3.forceCenter(WIDTH/2, HEIGHT/2-50))
-        .velocityDecay(0.5)
+        .alphaDecay(0.01)
+        .velocityDecay(0.88 + Math.random()/10)
         .force("x", d3.forceX().strength(0.03))
         .force("y", d3.forceY().strength(0.3))
         .force('links', linkForce)
-        .force("collide", d3.forceCollide().radius(d => (d.Radius+ d.Radius/10)).iterations(50))
+        .force("collide", d3.forceCollide().radius(d => (d.Radius+ d.Radius/10)).iterations(Math.random() * 50))
         .on('tick', function() {
             node
             .attr('cx', function(d) {
