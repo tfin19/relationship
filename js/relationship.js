@@ -83,6 +83,7 @@ var parseData = d3.csv('data/ge_people.csv', function(node) {
         person.name = node['FullName'];
         person.id = node['nodeId'];
         people.push(person);
+        console.log(people.name)
 
         //set main and secondary colors
         switch(node.Relationship) {
