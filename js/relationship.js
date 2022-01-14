@@ -2,7 +2,7 @@ var svg = d3.select('#relationshipWeb')
     .append('svg')
     .attr('width', WIDTH)
     .attr('height', HEIGHT)
-    .attr('margin-top', 30);
+    .attr('padding-top', 50);
 
 //define GE as first node (she's not in the big Excel sheet)
 var nodes = [
@@ -251,7 +251,7 @@ parseData.then(function() {
     //  });
     d3.forceSimulation(nodes)
         .force('charge', d3.forceManyBody().strength(Math.random() * 10))
-        .force('center', d3.forceCenter(WIDTH/2, HEIGHT/2-50))
+        .force('center', d3.forceCenter(WIDTH/2, HEIGHT/2 - 10))
         .alphaDecay(0.01)
         .velocityDecay(0.88 + Math.random()/10)
         .force("x", d3.forceX().strength(0.03))
