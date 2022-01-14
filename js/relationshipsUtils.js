@@ -73,7 +73,9 @@ var USER_MENU_WIDTH_HIDE = '160px';
   */
  function parseFullName(node) {
               //parse name
-     var name = node["First Name"];
+     var name = node["Last Name"] + ",";
+
+     name += " " + node["First Name"];
  
      if(node["Nickname"]) {
          name += " \"" + node["Nickname"] + "\"";
@@ -82,7 +84,7 @@ var USER_MENU_WIDTH_HIDE = '160px';
          name += " " + node["Second Names"];
      }
  
-     name += " " + node["Last Name"];
+     
  
      // if(node["Title"]) {
      //     name = node["Title"] + " " + name;
