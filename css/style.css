@@ -52,10 +52,10 @@ html .Application .UserMenu #Toggleable .Legend .keyGroup .key {
   border-radius: 3px;
 }
 html .Application .UserMenu #Toggleable .Legend .keyGroup #familyKey {
-  background-color: #ff9bb2;
+  background-color: #9bc1ff;
 }
 html .Application .UserMenu #Toggleable .Legend .keyGroup #friendKey {
-  background-color: #9bc1ff;
+  background-color: #93c6b1;
 }
 html .Application .UserMenu #Toggleable .Legend .keyGroup #businessKey {
   background-color: #fff09b;
