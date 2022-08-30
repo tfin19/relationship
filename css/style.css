@@ -99,7 +99,7 @@ html .Application .UserMenu #Toggleable .BiographyFamily #BiographySummary {
   background-color: rgba(255, 79, 119, 0.2);
 }
 html .Application .UserMenu #Toggleable .BiographyFriend {
-  background-color: rgba(147, 198, 177, 0.5);
+  background-color: rgba(255, 240, 0, 0.5);
 }
 html .Application .UserMenu #Toggleable .BiographyFriend #BiographySummary {
   background-color: rgba(97, 172, 141, 0.4);
