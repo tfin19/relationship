@@ -98,15 +98,15 @@ let parseData = d3.csv("data/ge_people.csv", function (node) {
       switch (node.Relationship) {
         case "friend":
           node.ImagePath = "image_friend";
-          node.Image = "nopicture_friend.png";
+        
           break;
         case "family":
           node.ImagePath = "image_family";
-          node.Image = "nopicture_family.png";
+          
           break;
         default:
           node.ImagePath = "image_acquaintance";
-          node.Image = "nopicture_acquaintence.png";
+         
           break;
       }
     }
