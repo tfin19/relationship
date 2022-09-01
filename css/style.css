@@ -4,10 +4,11 @@ html {
   
 }
 body {
-  background: rgb(44, 44, 61)
+  background: rgb(44, 44, 61);
+
 }
 html .Application {
-  padding: 20px;
+
   display: flex;
   flex-direction: row;
 }
@@ -148,10 +149,10 @@ html .Application .UserMenu #Toggleable #Biography .Photo {
   justify-content: center;
   margin: 5px 0;
 }
-html .Application .UserMenu #Toggleable #Biography .Photo #BiographyPhoto {
+/* html .Application .UserMenu #Toggleable #Biography .Photo #BiographyPhoto {
   margin: 0 auto;
   width: 50%;
-}
+} */
 html .Application .UserMenu #Toggleable #Biography #BiographySummary {
   padding: 1%;
 }
@@ -186,10 +187,12 @@ html .Application #relationshipWeb {
   margin: 0 auto;
   width: 100%;
   height: 90vh;
+  margin-left: -20px;
 }
 
 .RelationshipNode {
   cursor: pointer;
+  stroke-width: 5;
 }
 
 .fullNameBorderFriend {
@@ -257,3 +260,16 @@ datalist{
 
 
 /*# sourceMappingURL=style.css.map */
+
+
+
+/*style for the right side images*/
+
+ #BiographyPhoto{
+  object-fit: cover;
+  height: 153.67px;
+  width: 153.67px;
+  border:1px solid #636363;
+  border-radius: 50%;
+  margin:0 auto;
+}
