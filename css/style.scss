@@ -8,13 +8,17 @@ html {
         display: flex;
         flex-direction: row;
         .UserMenu {
+            /*---Layout---*/
             position: absolute;
-            padding: 20px;
-            background-color: rgba(lighten(black, 10%), 0.2);
-            width: 30%;
-            border-radius: 3px;
-            z-index: 3;
-
+            display: flex;
+            padding: 24px;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            /*---Style---*/
+            border-radius: 20px;
+            background: #68302C;
+            box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
             #Toggleable{
                 .Legend {
                     height: auto;
