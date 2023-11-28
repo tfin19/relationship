@@ -77,7 +77,8 @@ let parseData = d3.csv("data/ge_people.csv", function (node) {
 
     //push current person to list of people for datalist
     let person = new Object();
-    person.name = node["FullName"];
+    person.name = node["FullName"].replace(/\s*,\s*/g, ", ").trim();
+    console.log(person.name);
     person.id = node["nodeId"];
     people.push(person);
     console.log(people.name);
