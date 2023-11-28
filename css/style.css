@@ -1,3 +1,4 @@
+
 html {
   width: 100vw;
   height: 100vh;
@@ -12,6 +13,68 @@ html .Application {
   display: flex;
   flex-direction: row;
 }
+
+/*--- SEARCH ---*/
+.search{
+  position: absolute;
+  top:50%;
+  left:50%;
+  transform: translate(-50%,-50%);
+  background: #68302C;;
+  padding: 30px;
+  border-radius: 84px;
+  border: none;
+  display: flex;
+  align-items: center;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+.submit{
+  font-size: 40px;
+  cursor: pointer;
+  color: white;
+  background: none;
+  border: none;
+  
+}
+.search-txt{
+  width: 0;
+  font-size: 36px;
+  border: none;
+  background: transparent;
+  outline: none;
+  transition: 0.75s;
+}
+::placeholder{
+  color: rgba(0, 0, 0, 0.252);
+}
+.active{
+background: #68302C;
+padding: 12px 12px 0px 12px;
+gap: 24px;
+align-self: stretch;
+border-radius: 65px;
+box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+.active .submit{
+  color: white;
+  float: right;
+}
+.active .box {
+  display: flex;
+padding: 24px;
+align-items: center;
+gap: 10px;
+flex: 1 0 0;
+align-self: stretch;
+border-radius: 12px 65px 65px 12px;
+background: var(--Input-field-background, #F2F4F8);
+box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+.active .box .search-txt{
+width: 350px;
+padding: 0 20px;
+}
+
 html .Application .UserMenu {
   position: absolute;
   /* padding: 10px; */
