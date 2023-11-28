@@ -298,9 +298,25 @@ function filterInput() {
 
     indicies.forEach(function (index) {
       let nodeId = people[index].id;
-      selectSearchedNode(d3.select("#" + nodeId));
+      display(selectSearchedNode(d3.select("#" + nodeId)));
+      
     });
   }
+}
+/**
+ * displays all filtered nodes in a list as you type
+ */
+const resultsBox=document.querySelector(".result-box");
+function display(result){
+  const content = result.map((list) => {
+    return "<li onclick=selectInput(this)>" + list + "</li>";
+  });
+
+  resultsBox.innerHTML = "<ul>" + content + "</ul>";
+}
+
+function selectInput(element) {
+  searchBar.value = element.innerHTML;
 }
 
 /**
