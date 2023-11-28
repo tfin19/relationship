@@ -15,7 +15,7 @@ html .Application {
 }
 
 /*--- SEARCH ---*/
-.search{
+.search {
   position: absolute;
   top:50%;
   left:50%;
@@ -28,51 +28,72 @@ html .Application {
   align-items: center;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 }
-.submit{
-  font-size: 40px;
+.frame {
+  align-items: center;
+  height: 60px;
+  padding: 12px;
+}
+.frame .submit {
   cursor: pointer;
-  color: white;
+  color: #F2F4F8;
   background: none;
   border: none;
   
 }
-.search-txt{
-  width: 0;
-  font-size: 36px;
+.search-txt {
+  font-size: 20px;
+  font-family: Bahnschrift;
+  font-style: normal;
+  font-weight: 300;
   border: none;
   background: transparent;
-  outline: none;
   transition: 0.75s;
+  line-height: 26px;
+  
 }
-::placeholder{
-  color: rgba(0, 0, 0, 0.252);
+
+::placeholder {
+  color: var(--Black, #000);
 }
-.active{
+.active {
 background: #68302C;
-padding: 12px 12px 0px 12px;
+padding: 0px 12px;
 gap: 24px;
 align-self: stretch;
 border-radius: 65px;
 box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+display: flex;
+align-items: flex-start;
 }
-.active .submit{
-  color: white;
-  float: right;
+
+.active .frame {
+display: flex;
+height: 60px;
+padding: 12px;
+align-items: center;
+gap: 24px;
+flex: 1 0 0;
 }
-.active .box {
-  display: flex;
+
+.active .frame .submit {
+  width: 30px;
+  height: 30px;
+}
+
+.active .frame .box {
+display: flex;
 padding: 24px;
 align-items: center;
 gap: 10px;
-flex: 1 0 0;
 align-self: stretch;
-border-radius: 12px 65px 65px 12px;
+border-radius: 24px 65px 65px 24px;
 background: var(--Input-field-background, #F2F4F8);
 box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 }
-.active .box .search-txt{
-width: 350px;
-padding: 0 20px;
+
+.active .frame .box .search-txt {
+width: 100%;
+flex: 1 0 0;
 }
 
 html .Application .UserMenu {
