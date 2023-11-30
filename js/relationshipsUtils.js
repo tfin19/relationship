@@ -88,7 +88,7 @@ function parseFullName(node) {
   //     name = node["Title"] + " " + name;
   // }
 
-  node["FullName"] = name;
+  node["FullName"] = name.trim();
   return node;
 }
 
@@ -224,6 +224,21 @@ function showSummary(node) {
       );
     d3.select("#BiographyLetters").append("text").html(data["Letters"]);
   }
+  if (data["Links"]) {
+    d3.select("#BiographyLinks")
+      .append("text")
+      .html(
+        "<u><br>Links to other resources:</u></br>"
+      );
+      // adds new links depending on how many there are. 
+      // use comma separations to add more links.
+      strLinks = data["Links"].split(/\s*,\s*/);
+      for(var i = 0; i < strLinks.length; i++) {
+        // d3.select("#BiographyLinks").append("text").html(<a href={strLinks[0]}>[i]</a>);
+        d3.select("#BiographyLinks").append("text").html(strLinks[i]);
+      }
+    }
+      
 }
 
 /**
@@ -247,6 +262,7 @@ function clearDisplay() {
   document.getElementById("BirthAndDeath").innerHTML = "";
   document.getElementById("BiographySummary").innerHTML = "";
   document.getElementById("BiographyLetters").innerHTML = "";
+  document.getElementById("BiographyLinks").innerHTML = "";
   document.getElementById("Biography").style.display = "none";
 }
 

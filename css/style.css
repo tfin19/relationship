@@ -17,6 +17,50 @@ html .Application {
 /*--- SEARCH ---*/
 .search {
   position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  gap: 2;
+  align-items: center;
+  border-radius: 65px;
+  border: none;
+  background: #68302C;
+  padding: 30px;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+.submit {
+  border: none;
+  background: none;
+  color: white;
+  cursor: pointer;
+  fontSize: 40px;
+}
+
+.search-txt {
+  width: 0;
+  border-radius: 65px;
+  border: none;
+  background: transparent;
+  color: white;
+  font-size: 40px;
+  outline: none;
+  transition: all 1s;
+}
+
+.active .search-txt {
+  width: 350px;
+  background: #F2F4F8;
+  color: black;
+  padding: 0 10px;
+}
+
+
+
+
+/* .search {
+  position: absolute;
   top:50%;
   left:50%;
   transform: translate(-50%,-50%);
@@ -31,7 +75,7 @@ html .Application {
 .frame {
   align-items: center;
   height: 100%;
-  transition: 0.75s;
+  transition: all 0.75s ease;
 }
 .frame .submit {
   cursor: pointer;
@@ -69,14 +113,16 @@ align-items: flex-start;
 }
 
 .box {
+  display: none;
 }
 .active .frame {
 display: flex;
-height: 60px;
+height: 100%;
 padding: 12px;
 align-items: center;
 gap: 24px;
 flex: 1 0 0;
+transition: 0.75s;
 }
 
 .active .frame .submit {
@@ -85,7 +131,7 @@ flex: 1 0 0;
 }
 
 .active .frame .box {
-  display: flex;
+display: flex;
 padding: 24px;
 align-items: center;
 gap: 10px;
@@ -113,7 +159,7 @@ width: 100%;
 
 .result-box ul li:hover {
   background: #eee;
-}
+} */
 
 html .Application .UserMenu {
   position: absolute;
@@ -262,6 +308,10 @@ html .Application .UserMenu #Toggleable #Biography #BiographySummary {
 html .Application .UserMenu #Toggleable #Biography #BiographyLetters {
   margin-top: 10px;
   padding: 1%;
+}
+html .Application.UserMenu #Toggleable #Biography #BiographyLinks {
+  padding: 1%;
+  margin-top: 10px;
 }
 html .Application .UserMenu .ToggleMenu {
   display: flex;
