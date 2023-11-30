@@ -70,15 +70,15 @@ let parseData = d3.csv("data/ge_people.csv", function (node) {
     node["nodeId"] = "node_" + node["index"];
 
     // *** MOVED TO STATIC DATA ***
-    //parse closeness into a number
-    // let closeness = parseInt(node.Closeness);
-    // if (closeness < 0) {
-    //   node.Closeness = 0;
-    //   node.Radius = 0;
-    // } else {
-    //   node.Radius = (17 - closeness) * 2;
-    //   node.Closeness = closeness + 2;
-    // }
+    // parse closeness into a number
+    let closeness = parseInt(node.Closeness);
+    if (closeness < 0) {
+      node.Closeness = 0;
+      node.Radius = 0;
+    } else {
+      node.Radius = (17 - closeness) * 2;
+      node.Closeness = closeness + 2;
+    }
   
 
     //push current person to list of people for datalist
@@ -119,9 +119,9 @@ let parseData = d3.csv("data/ge_people.csv", function (node) {
     }
     //create links object
     node["Links"] = "";
-    node["Closeness"] = 0;
-    node["Radius"] = 0;
-    
+    // node["Closeness"] = 0;
+    // node["Radius"] = 0;
+
     nodes.push(node);
     links.push({ source: node.index, target: 0 });
     // console.log(links)
@@ -129,8 +129,7 @@ let parseData = d3.csv("data/ge_people.csv", function (node) {
    //console.log(node["FullName"]);
   // console.log(links)
 });
-
-
+ 
 /**
  * Parse static csv data
  */  
@@ -142,29 +141,28 @@ let parseStaticData = d3.csv("data/staticData.csv", function (data) {
         var index = nodes.findIndex(object => {
           return object.FullName === staticData[i].FullName;
         });
-        
         if (index > -1){
           nodes[index].Links = staticData[i].Link.toString();
-          
-          //parse closeness into a number
-          let closeness = parseInt(staticData[i].Closeness);
-          if (closeness < 0) {
-            nodes[index].Closeness = 0;
-            nodes[index].Radius = 0;
-          } else {
-            nodes[index].Radius = (17 - closeness) * 2;
-            nodes[index].Closeness = closeness + 2;
-          }
+          // //parse closeness into a number
+          // let closeness = parseInt(staticData[i].Closeness);
+          // if (closeness < 0) {
+          //   nodes[index].Closeness = 0;
+          //   nodes[index].Radius = 0;
+          // } else {
+          //   nodes[index].Radius = (17 - closeness) * 2;
+          //   nodes[index].Closeness = closeness + 2;
+          // }
         }
 
       }
   }
   });
-console.log(nodes);
+
 /**
  * Populates the dropdown for the search functionality and starts a force simulation using nodes data
  */
 parseData.then(function () {
+  console.log(nodes + "NEW");
   //sort and append people data to the datalist
   people.sort(function (a, b) {
     if (a.name > b.name) {
