@@ -64,16 +64,17 @@ let parseData = d3.csv("data/ge_people.csv", function (node) {
   if (node) {
     //only parse important individuals
     node = parseFullName(node);
-    var map = d3.map(node, d => d.FullName);
-    d3.csv("data/staticData.csv", function(row) {
-      map.get(row.FullName).Closeness = row.Closeness;
-      map.get(row.FullName).Relationship = row.Relationship;
-      map.get(row.FullName).Image = row.Image;
-      map.get(row.FullName).Links = row.Links;
-      return null;
-    }, function() {
-
-    });
+    d3.csv("data/staticData.csv", function(data) {
+      Array.from(node).forEach(d => {
+        Array.from(data).forEach(e => {
+          if (d.FullName == e.FullName) {
+            d.Links = e.Links;
+            d.Closeness = e.Closeness;
+            d.Relationship = e.Relationship;
+            d.Image = e.Image;
+          }
+        })
+      })
 
     //give index to node
     node = setIndex(node);
@@ -135,8 +136,8 @@ let parseData = d3.csv("data/ge_people.csv", function (node) {
     nodes.push(node);
     links.push({ source: node.index, target: 0 });
     // console.log(links)
-  }
-   //console.log(nodes);
+  });}
+  console.log(nodes);
   // console.log(links)
 });
  
