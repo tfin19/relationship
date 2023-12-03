@@ -64,6 +64,16 @@ let parseData = d3.csv("data/ge_people.csv", function (node) {
   if (node) {
     //only parse important individuals
     node = parseFullName(node);
+    var map = d3.map(node, d => d.FullName);
+    d3.csv("data/staticData.csv", function(row) {
+      map.get(row.FullName).Closeness = row.Closeness;
+      map.get(row.FullName).Relationship = row.Relationship;
+      map.get(row.FullName).Image = row.Image;
+      map.get(row.FullName).Links = row.Links;
+      return null;
+    }, function() {
+
+    });
 
     //give index to node
     node = setIndex(node);
@@ -83,7 +93,7 @@ let parseData = d3.csv("data/ge_people.csv", function (node) {
 
     //push current person to list of people for datalist
     let person = new Object();
-    person.name = node["FullName"].replace(/\s*,\s*/g, ", ").trim();
+    person.name = node["FullName"];
     //console.log(person.name);
     person.id = node["nodeId"];
     people.push(person);
@@ -118,7 +128,7 @@ let parseData = d3.csv("data/ge_people.csv", function (node) {
       }
     }
     //create links object
-    node["Links"] = "";
+    //node["Links"] = "";
     // node["Closeness"] = 0;
     // node["Radius"] = 0;
 
@@ -126,37 +136,37 @@ let parseData = d3.csv("data/ge_people.csv", function (node) {
     links.push({ source: node.index, target: 0 });
     // console.log(links)
   }
-   //console.log(node["FullName"]);
+   //console.log(nodes);
   // console.log(links)
 });
  
 /**
  * Parse static csv data
  */  
-let parseStaticData = d3.csv("data/staticData.csv", function (data) {
-    if (data) {
-      staticData.push(data);
-      // If name matches, add info to nodes
-      for (var i = 0; i < staticData.length; i++){
-        var index = nodes.findIndex(object => {
-          return object.FullName === staticData[i].FullName;
-        });
-        if (index > -1){
-          nodes[index].Links = staticData[i].Link.toString();
-          // //parse closeness into a number
-          // let closeness = parseInt(staticData[i].Closeness);
-          // if (closeness < 0) {
-          //   nodes[index].Closeness = 0;
-          //   nodes[index].Radius = 0;
-          // } else {
-          //   nodes[index].Radius = (17 - closeness) * 2;
-          //   nodes[index].Closeness = closeness + 2;
-          // }
-        }
+// let parseStaticData = d3.csv("data/staticData.csv", function (data) {
+//     if (data) {
+//       staticData.push(data);
+//       // If name matches, add info to nodes
+//       for (var i = 0; i < staticData.length; i++){
+//         var index = nodes.findIndex(object => {
+//           return object.FullName === staticData[i].FullName;
+//         });
+//         if (index > -1){
+//           nodes[index].Links = staticData[i].Link.toString();
+//           // //parse closeness into a number
+//           // let closeness = parseInt(staticData[i].Closeness);
+//           // if (closeness < 0) {
+//           //   nodes[index].Closeness = 0;
+//           //   nodes[index].Radius = 0;
+//           // } else {
+//           //   nodes[index].Radius = (17 - closeness) * 2;
+//           //   nodes[index].Closeness = closeness + 2;
+//           // }
+//         }
 
-      }
-  }
-  });
+//       }
+//   }
+//   });
 
 /**
  * Populates the dropdown for the search functionality and starts a force simulation using nodes data
