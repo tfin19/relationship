@@ -21,6 +21,7 @@ let people = [];
 
 let staticData = [];
 let node = [];
+let nodes = [];
 //create def to group images
 let images = svg.append("defs").attr("id", "images");
 
@@ -29,7 +30,6 @@ setImage("images/png/georgeeliot.png", 0);
 
 //set default image for individuals with no pictures
 setImage("images/png/nopicture_friend.png", "friend");
-setImage("images/png/nopicture_acquaintence.png", "acquaintance");
 setImage("images/png/nopicture_family.png", "family");
 
 //Scale Legend
@@ -56,7 +56,7 @@ const legendSize = d3
   .labelAlign("start");
 
 /**
- * Parse csv data
+ * Parse csv datanode
  */
 
 let parseData = Promise.all([
@@ -67,13 +67,15 @@ let parseData = Promise.all([
   // data[1] contains staticData.csv
   staticData = data[1];
   node = data[0];
-  console.log("Static:");
-  console.log(staticData);
+  node = node.slice(0, 125);
+  // console.log("Static:");
+  // console.log(staticData);
   node.forEach((node) => {
     node = parseFullName(node);
   });
-  console.log("NonStatic:");
-  console.log(node);
+  // console.log("NonStatic:");
+  // console.log(node);
+
   //If name matches, add info to nodes
   for (var i = 0; i < staticData.length; i++){
     var index = node.findIndex(object => {
@@ -87,16 +89,13 @@ let parseData = Promise.all([
     }
 
   }
-    //only parse important individuals
-    //node = parseFullName(node);
-    //give index to node
-    node = setIndex(node);
-    node["nodeId"] = "node_" + node["index"];
-
-    // *** MOVED TO STATIC DATA ***
-    // parse closeness into a number
     node.forEach((node) => {
+      //give index to node
+      node = setIndex(node);
+      node["nodeId"] = "node_" + node["index"];
       let closeness = parseInt(node.Closeness);
+
+      // parse closeness into a number
       if (closeness < 0) {
         node.Closeness = 0;
         node.Radius = 0;
@@ -104,53 +103,58 @@ let parseData = Promise.all([
         node.Radius = (17 - closeness) * 2;
         node.Closeness = closeness + 2;
       }
+      //push current person to list of people for datalist
+      let person = new Object();
+      person.name = node["FullName"];
+      person.id = node["nodeId"];
+      people.push(person);
+
+      if (node.Relationship == "friend") {
+        node.mainColor = FRIEND_COLOR;
+        node.secondaryColor = FRIEND_SECONDARY_COLOR;
+      } else {
+        node.mainColor = FAMILY_COLOR;
+        node.secondaryColor = FAMILY_SECONDARY_COLOR;
+      }
+
+      if (node.Image) {
+        setImage("images/png/" + node.Image, node.index);
+        node.ImagePath = "image_" + node.index;
+      } else {
+        //set individuals with no images to defaults
+        switch (node.Relationship) {
+          case "friend":
+            node.ImagePath = "image_friend";
+          
+            break;
+          case "family":
+            node.ImagePath = "image_family";
+            
+            break;
+          default:
+            node.ImagePath = "image_friend";
+          
+            break;
+          }
+        }
     });
 
   
-    //push current person to list of people for datalist
-    let person = new Object();
-    person.name = node["FullName"];
-    //console.log(person.name);
-    person.id = node["nodeId"];
-    people.push(person);
-    //console.log(people.name);
 
-    if (node.Relationship == "friend") {
-      node.mainColor = FRIEND_COLOR;
-      node.secondaryColor = FRIEND_SECONDARY_COLOR;
-    } else {
-      node.mainColor = FAMILY_COLOR;
-      node.secondaryColor = FAMILY_SECONDARY_COLOR;
-    }
 
-    if (node.Image) {
-      setImage("images/png/" + node.Image, node.index);
-      node.ImagePath = "image_" + node.index;
-    } else {
-      //set individuals with no images to defaults
-      switch (node.Relationship) {
-        case "friend":
-          node.ImagePath = "image_friend";
-        
-          break;
-        case "family":
-          node.ImagePath = "image_family";
-          
-          break;
-        default:
-          node.ImagePath = "image_acquaintance";
-        
-          break;
-        }
-      }
+
     node.unshift(ge);
-    links.push({ source: node.index, target: 0 });
+    node.forEach((node) => {
+      nodes.push(node);
+      links.push({ source: node.index, target: 0 });
+    });
+    
 
-  //NODE FUNCTIONS 
+  //NODE FUNCTIONS
+  console.log(typeof(nodes));
   console.log(nodes);
-  console.log(node);
 
-  return node;
+  return nodes;
  
   });
 
