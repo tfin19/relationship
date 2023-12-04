@@ -88,7 +88,7 @@ function parseFullName(node) {
   //     name = node["Title"] + " " + name;
   // }
 
-  node["FullName"] = name.replace(/\s*,\s*/g, ", ").trim();
+  node["FullName"] = name.replace(/\s*,\s*/g, ", ").trim().replace(/\s+/g, ' ');
   return node;
 }
 

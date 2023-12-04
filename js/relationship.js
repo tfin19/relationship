@@ -60,7 +60,7 @@ const legendSize = d3
  */
 
 let parseData = Promise.all([
-  d3.csv("data/ge_people.csv"),
+  d3.csv("data/testData.csv"),
   d3.csv("data/staticData.csv"),
 ]).then(function (data) {
   // data[0] contatins ge_people.csv
@@ -68,13 +68,11 @@ let parseData = Promise.all([
   staticData = data[1];
   node = data[0];
   node = node.slice(0, 125);
-  // console.log("Static:");
-  // console.log(staticData);
+
+  //parse full name - not used dynamically since
   node.forEach((node) => {
-    node = parseFullName(node);
+    //node = parseFullName(node); 
   });
-  // console.log("NonStatic:");
-  // console.log(node);
 
   //If name matches, add info to nodes
   for (var i = 0; i < staticData.length; i++){
@@ -99,7 +97,11 @@ let parseData = Promise.all([
       if (closeness < 0) {
         node.Closeness = 0;
         node.Radius = 0;
-      } else {
+      } else if (isNaN(closeness)){
+        node.Closeness = 0;
+        node.Radius = 0;
+      } 
+      else {
         node.Radius = (17 - closeness) * 2;
         node.Closeness = closeness + 2;
       }
@@ -137,6 +139,9 @@ let parseData = Promise.all([
             break;
           }
         }
+        console.log(node["FullName"]);
+        console.log(node["Radius"]);
+        console.log(node["Closeness"]);
     });
 
   
