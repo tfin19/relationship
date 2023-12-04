@@ -6,21 +6,21 @@ let svg = d3
   .attr("padding-top", 50);
 
 //define GE as first node (she's not in the big Excel sheet)
-let nodes = [
-  {
+
+let ge = {
     Radius: 10 * 4,
     Closeness: 10 * 4,
     index: 0,
     ImagePath: "image_0",
-  },
-];
+  };
+
 let links = [];
 
 //list for people datalist
 let people = [];
 
 let staticData = [];
-let nonStaticData = [];
+let node = [];
 //create def to group images
 let images = svg.append("defs").attr("id", "images");
 
@@ -66,43 +66,36 @@ let parseData = Promise.all([
   // data[0] contatins ge_people.csv
   // data[1] contains staticData.csv
   staticData = data[1];
-  nonStaticData = data[0];
+  node = data[0];
   console.log("Static:");
   console.log(staticData);
-  nonStaticData.forEach((node) => {
+  node.forEach((node) => {
     node = parseFullName(node);
   });
   console.log("NonStatic:");
-  console.log(nonStaticData);
+  console.log(node);
   //If name matches, add info to nodes
-    for (var i = 0; i < staticData.length; i++){
-      var index = nonStaticData.findIndex(object => {
-        return object.FullName === staticData[i].FullName;
-      });
-      if (index > -1){
-        nonStaticData[index].Links = staticData[i].Links.toString().trim();
-        nonStaticData[index].Closeness = staticData[i].Closeness;
-        nonStaticData[index].Image = staticData[i].Image;
-        nonStaticData[index].Relationship = staticData[i].Relationship;
-      }
-
+  for (var i = 0; i < staticData.length; i++){
+    var index = node.findIndex(object => {
+      return object.FullName === staticData[i].FullName;
+    });
+    if (index > -1){
+      node[index].Links = staticData[i].Links.toString().trim();
+      node[index].Closeness = staticData[i].Closeness;
+      node[index].Image = staticData[i].Image;
+      node[index].Relationship = staticData[i].Relationship;
     }
 
-  
-   //NODE FUNCTIONS
-   return nonStaticData;
-}).then(function() {
-  console.log(nonStaticData);
-  d3.csv(nonStaticData, function (node) {
-    if (node) {
-      //only parse important individuals
-      //node = parseFullName(node);
-      //give index to node
-      node = setIndex(node);
-      node["nodeId"] = "node_" + node["index"];
+  }
+    //only parse important individuals
+    //node = parseFullName(node);
+    //give index to node
+    node = setIndex(node);
+    node["nodeId"] = "node_" + node["index"];
 
-      // *** MOVED TO STATIC DATA ***
-      // parse closeness into a number
+    // *** MOVED TO STATIC DATA ***
+    // parse closeness into a number
+    node.forEach((node) => {
       let closeness = parseInt(node.Closeness);
       if (closeness < 0) {
         node.Closeness = 0;
@@ -111,56 +104,61 @@ let parseData = Promise.all([
         node.Radius = (17 - closeness) * 2;
         node.Closeness = closeness + 2;
       }
-    
-      //push current person to list of people for datalist
-      let person = new Object();
-      person.name = node["FullName"];
-      //console.log(person.name);
-      person.id = node["nodeId"];
-      people.push(person);
-      //console.log(people.name);
+    });
 
-      if (node.Relationship == "friend") {
-        node.mainColor = FRIEND_COLOR;
-        node.secondaryColor = FRIEND_SECONDARY_COLOR;
-      } else {
-        node.mainColor = FAMILY_COLOR;
-        node.secondaryColor = FAMILY_SECONDARY_COLOR;
-      }
+  
+    //push current person to list of people for datalist
+    let person = new Object();
+    person.name = node["FullName"];
+    //console.log(person.name);
+    person.id = node["nodeId"];
+    people.push(person);
+    //console.log(people.name);
 
-      if (node.Image) {
-        setImage("images/png/" + node.Image, node.index);
-        node.ImagePath = "image_" + node.index;
-      } else {
-        //set individuals with no images to defaults
-        switch (node.Relationship) {
-          case "friend":
-            node.ImagePath = "image_friend";
+    if (node.Relationship == "friend") {
+      node.mainColor = FRIEND_COLOR;
+      node.secondaryColor = FRIEND_SECONDARY_COLOR;
+    } else {
+      node.mainColor = FAMILY_COLOR;
+      node.secondaryColor = FAMILY_SECONDARY_COLOR;
+    }
+
+    if (node.Image) {
+      setImage("images/png/" + node.Image, node.index);
+      node.ImagePath = "image_" + node.index;
+    } else {
+      //set individuals with no images to defaults
+      switch (node.Relationship) {
+        case "friend":
+          node.ImagePath = "image_friend";
+        
+          break;
+        case "family":
+          node.ImagePath = "image_family";
           
-            break;
-          case "family":
-            node.ImagePath = "image_family";
-            
-            break;
-          default:
-            node.ImagePath = "image_acquaintance";
-          
-            break;
+          break;
+        default:
+          node.ImagePath = "image_acquaintance";
+        
+          break;
         }
       }
+    node.unshift(ge);
+    links.push({ source: node.index, target: 0 });
 
-      nodes.push(node);
-      links.push({ source: node.index, target: 0 });
-      // console.log(links)
-    }
-    //console.log(nodes);
-    // console.log(links)
+  //NODE FUNCTIONS 
+  console.log(nodes);
+  console.log(node);
+
+  return node;
+ 
   });
-}).then(function () {
+
+
+parseData.then(function () {
   /**
  * Populates the dropdown for the search functionality and starts a force simulation using nodes data
  */
-  console.log(nodes + "NEW");
   //sort and append people data to the datalist
   people.sort(function (a, b) {
     if (a.name > b.name) {
