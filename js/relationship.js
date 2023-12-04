@@ -20,7 +20,7 @@ let links = [];
 let people = [];
 
 let staticData = [];
-
+let nonStaticData = [];
 //create def to group images
 let images = svg.append("defs").attr("id", "images");
 
@@ -59,120 +59,107 @@ const legendSize = d3
  * Parse csv data
  */
 
-
-let parseData = d3.csv("data/ge_people.csv", function (node) {
-  if (node) {
-    //only parse important individuals
+let parseData = Promise.all([
+  d3.csv("data/ge_people.csv"),
+  d3.csv("data/staticData.csv"),
+]).then(function (data) {
+  // data[0] contatins ge_people.csv
+  // data[1] contains staticData.csv
+  staticData = data[1];
+  nonStaticData = data[0];
+  console.log("Static:");
+  console.log(staticData);
+  nonStaticData.forEach((node) => {
     node = parseFullName(node);
-    d3.csv("data/staticData.csv", function(data) {
-      Array.from(node).forEach(d => {
-        Array.from(data).forEach(e => {
-          if (d.FullName == e.FullName) {
-            d.Links = e.Links;
-            d.Closeness = e.Closeness;
-            d.Relationship = e.Relationship;
-            d.Image = e.Image;
-          }
-        })
-      })
-
-    //give index to node
-    node = setIndex(node);
-    node["nodeId"] = "node_" + node["index"];
-
-    // *** MOVED TO STATIC DATA ***
-    // parse closeness into a number
-    let closeness = parseInt(node.Closeness);
-    if (closeness < 0) {
-      node.Closeness = 0;
-      node.Radius = 0;
-    } else {
-      node.Radius = (17 - closeness) * 2;
-      node.Closeness = closeness + 2;
-    }
-  
-
-    //push current person to list of people for datalist
-    let person = new Object();
-    person.name = node["FullName"];
-    //console.log(person.name);
-    person.id = node["nodeId"];
-    people.push(person);
-    //console.log(people.name);
-
-    if (node.Relationship == "friend") {
-      node.mainColor = FRIEND_COLOR;
-      node.secondaryColor = FRIEND_SECONDARY_COLOR;
-    } else {
-      node.mainColor = FAMILY_COLOR;
-      node.secondaryColor = FAMILY_SECONDARY_COLOR;
-    }
-
-    if (node.Image) {
-      setImage("images/png/" + node.Image, node.index);
-      node.ImagePath = "image_" + node.index;
-    } else {
-      //set individuals with no images to defaults
-      switch (node.Relationship) {
-        case "friend":
-          node.ImagePath = "image_friend";
-        
-          break;
-        case "family":
-          node.ImagePath = "image_family";
-          
-          break;
-        default:
-          node.ImagePath = "image_acquaintance";
-         
-          break;
+  });
+  console.log("NonStatic:");
+  console.log(nonStaticData);
+  //If name matches, add info to nodes
+    for (var i = 0; i < staticData.length; i++){
+      var index = nonStaticData.findIndex(object => {
+        return object.FullName === staticData[i].FullName;
+      });
+      if (index > -1){
+        nonStaticData[index].Links = staticData[i].Links.toString().trim();
+        nonStaticData[index].Closeness = staticData[i].Closeness;
+        nonStaticData[index].Image = staticData[i].Image;
+        nonStaticData[index].Relationship = staticData[i].Relationship;
       }
+
     }
-    //create links object
-    //node["Links"] = "";
-    // node["Closeness"] = 0;
-    // node["Radius"] = 0;
 
-    nodes.push(node);
-    links.push({ source: node.index, target: 0 });
+  
+   //NODE FUNCTIONS
+   return nonStaticData;
+}).then(function() {
+  console.log(nonStaticData);
+  d3.csv(nonStaticData, function (node) {
+    if (node) {
+      //only parse important individuals
+      //node = parseFullName(node);
+      //give index to node
+      node = setIndex(node);
+      node["nodeId"] = "node_" + node["index"];
+
+      // *** MOVED TO STATIC DATA ***
+      // parse closeness into a number
+      let closeness = parseInt(node.Closeness);
+      if (closeness < 0) {
+        node.Closeness = 0;
+        node.Radius = 0;
+      } else {
+        node.Radius = (17 - closeness) * 2;
+        node.Closeness = closeness + 2;
+      }
+    
+      //push current person to list of people for datalist
+      let person = new Object();
+      person.name = node["FullName"];
+      //console.log(person.name);
+      person.id = node["nodeId"];
+      people.push(person);
+      //console.log(people.name);
+
+      if (node.Relationship == "friend") {
+        node.mainColor = FRIEND_COLOR;
+        node.secondaryColor = FRIEND_SECONDARY_COLOR;
+      } else {
+        node.mainColor = FAMILY_COLOR;
+        node.secondaryColor = FAMILY_SECONDARY_COLOR;
+      }
+
+      if (node.Image) {
+        setImage("images/png/" + node.Image, node.index);
+        node.ImagePath = "image_" + node.index;
+      } else {
+        //set individuals with no images to defaults
+        switch (node.Relationship) {
+          case "friend":
+            node.ImagePath = "image_friend";
+          
+            break;
+          case "family":
+            node.ImagePath = "image_family";
+            
+            break;
+          default:
+            node.ImagePath = "image_acquaintance";
+          
+            break;
+        }
+      }
+
+      nodes.push(node);
+      links.push({ source: node.index, target: 0 });
+      // console.log(links)
+    }
+    //console.log(nodes);
     // console.log(links)
-  });}
-  console.log(nodes);
-  // console.log(links)
-});
- 
-/**
- * Parse static csv data
- */  
-// let parseStaticData = d3.csv("data/staticData.csv", function (data) {
-//     if (data) {
-//       staticData.push(data);
-//       // If name matches, add info to nodes
-//       for (var i = 0; i < staticData.length; i++){
-//         var index = nodes.findIndex(object => {
-//           return object.FullName === staticData[i].FullName;
-//         });
-//         if (index > -1){
-//           nodes[index].Links = staticData[i].Link.toString();
-//           // //parse closeness into a number
-//           // let closeness = parseInt(staticData[i].Closeness);
-//           // if (closeness < 0) {
-//           //   nodes[index].Closeness = 0;
-//           //   nodes[index].Radius = 0;
-//           // } else {
-//           //   nodes[index].Radius = (17 - closeness) * 2;
-//           //   nodes[index].Closeness = closeness + 2;
-//           // }
-//         }
-
-//       }
-//   }
-//   });
-
-/**
+  });
+}).then(function () {
+  /**
  * Populates the dropdown for the search functionality and starts a force simulation using nodes data
  */
-parseData.then(function () {
   console.log(nodes + "NEW");
   //sort and append people data to the datalist
   people.sort(function (a, b) {
