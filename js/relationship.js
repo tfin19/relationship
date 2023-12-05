@@ -91,9 +91,9 @@ let parseData = Promise.all([
       //give index to node
       node = setIndex(node);
       node["nodeId"] = "node_" + node["index"];
-      let closeness = parseInt(node.Closeness);
 
       // parse closeness into a number
+      let closeness = parseInt(node.Closeness);
       if (closeness < 0) {
         node.Closeness = 0;
         node.Radius = 0;
