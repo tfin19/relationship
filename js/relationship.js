@@ -60,14 +60,14 @@ const legendSize = d3
  */
 
 let parseData = Promise.all([
-  d3.csv("data/testData.csv"),
+  d3.csv("data/dynamicData.csv"),
   d3.csv("data/staticData.csv"),
 ]).then(function (data) {
   // data[0] contatins ge_people.csv
   // data[1] contains staticData.csv
   staticData = data[1];
   node = data[0];
-  node = node.slice(0, 125);
+  node = node.slice(0, 127);
 
   //parse full name - not used dynamically since
   node.forEach((node) => {
@@ -114,10 +114,15 @@ let parseData = Promise.all([
       if (node.Relationship == "friend") {
         node.mainColor = FRIEND_COLOR;
         node.secondaryColor = FRIEND_SECONDARY_COLOR;
-      } else {
+      } else if (node.Relationship == "family"){
         node.mainColor = FAMILY_COLOR;
         node.secondaryColor = FAMILY_SECONDARY_COLOR;
       }
+      // ** SET ACQUAINTANCE COLOR ** not used
+      // else if (node.Relationship == "acquaintance"){
+      //   node.mainColor = ACQ_COLOR;
+      //   node.secondaryColor = ACQ_SECONDARY_COLOR;
+      // }
 
       if (node.Image) {
         setImage("images/png/" + node.Image, node.index);
@@ -139,9 +144,6 @@ let parseData = Promise.all([
             break;
           }
         }
-        console.log(node["FullName"]);
-        console.log(node["Radius"]);
-        console.log(node["Closeness"]);
     });
 
   
