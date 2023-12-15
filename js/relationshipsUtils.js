@@ -256,6 +256,18 @@ function showSummary(node) {
     .html(handleBiographyText(data["Biography"].replace(/\"/g, '\\"')));
   if (data.Image) {
     document.getElementById("BiographyPhoto").src = "images/png/" + data.Image;
+  } else {
+    switch (data.Relationship) {
+      case "friend":
+        document.getElementById("BiographyPhoto").src = "images/png/nopicture_friend.png";
+        break;
+      case "family":
+        document.getElementById("BiographyPhoto").src = "images/png/nopicture_family.png";
+        break;
+      default:
+        document.getElementById("BiographyPhoto").src = "images/png/nopicture_acquaintence.png";
+        break;
+      }
   }
   if (data["Letters"]) {
     d3.select("#BiographyLetters")
@@ -275,7 +287,7 @@ function showSummary(node) {
       // use comma separations to add more links.
       strLinks = data["Links"].split(/\s*,\s*/);
       for(var i = 0; i < strLinks.length; i++) {
-        // d3.select("#BiographyLinks").append("text").html(<a href={strLinks[0]}>[i]</a>);
+        //d3.select("#BiographyLinks").append("text").html(<a v-bind:href={strLinks[i]}>test</a>);
         d3.select("#BiographyLinks").append("text").html(strLinks[i]);
       }
     }
