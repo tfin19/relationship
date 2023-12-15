@@ -33,6 +33,47 @@ let IMAGE_R = 80; //radius for biography container
 
 let USER_MENU_SHOWN = true;
 
+
+async function getMembers() {
+  let letterID = '46' 
+  let membersList = []
+  let letters = []
+  let data = []
+  // using the Fetch API to get collection info
+  const response = await (fetch('https://georgeeliotarchive.org/api/items?collection=19'))
+  const members = await response.json()
+
+  // iterates through the JSON to get desired information of each member of the collection  
+  for (let i = 0, l = members.length; i < l; i++) {   
+      
+      for (let j = 0, k = members[i].element_texts.length; j < k; j++) {  
+          if (members[i].element_texts[j].element.id == letterID) {  // finds letters by matching ID
+              letters[i] = members[i].element_texts[j].text;
+              break;
+          } 
+          else {
+              letters[i] = ''
+          }  
+      }
+  let member = {
+                "name": members[i].element_texts[0].text,
+        "bio": members[i].element_texts[1].text,
+        "letters": letters[i]
+          }
+    membersList.push(member)
+    
+  }
+
+
+  for(let i = 0; i < members.length; i++) {
+      data.push("\n\"" + membersList[i].name + "\"")
+      data.push("\"" + membersList[i].bio + "\"")
+      data.push("\"" + membersList[i].letters + "\"")
+  }
+  data = "FullName,Biography,Letters" + data;
+  return data;
+}
+
 /**
  * Creates a "pattern" element with the given imagePath and sets the pattern id with the index of the individual.
  *
