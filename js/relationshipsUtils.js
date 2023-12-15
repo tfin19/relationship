@@ -284,14 +284,25 @@ function showSummary(node) {
         "<u><br>Links to other resources:</u></br>"
       );
       // adds new links depending on how many there are. 
-      // use comma separations to add more links.
-      strLinks = data["Links"].split(/\s*,\s*/);
+      // use space separations to add more links.
+      strLinks = data["Links"].split(/[ ]+/);
       for(var i = 0; i < strLinks.length; i++) {
-        //d3.select("#BiographyLinks").append("text").html(<a v-bind:href={strLinks[i]}>test</a>);
-        d3.select("#BiographyLinks").append("text").html(strLinks[i]);
+        console.log(strLinks[i]);
+        d3.select("#BiographyLinks").append("text").html('<a id="hyperlink" href="#"></a>');
+        getUrl(strLinks[i], i+1);
       }
     }
       
+}
+
+/**
+ * Gets url and updates hyperlink if person has relevant links
+ * 
+ */
+function getUrl(link, index) {
+  var hyperlink = document.getElementById("hyperlink");
+  hyperlink.href = link;
+  hyperlink.innerText = "[" + index + "]";
 }
 
 /**
